@@ -7,6 +7,6 @@ commands:
   delay:
     description: 리스폰 딜레이를 수정합니다
     usage: /delay + (딜레이 시간/초)
-  kit:
+  teamspawn:
     description: 기본 지급 아이템을 얻습니다
     usage: /kit

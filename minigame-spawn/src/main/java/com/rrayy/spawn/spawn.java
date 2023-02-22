@@ -10,7 +10,7 @@ public class spawn extends JavaPlugin{
     public teamspawn t;
     private static JavaPlugin plugin = null;
     public boolean delay;
-    public static int delaytime;
+    public static Long delaytime;
     public boolean team;
 
     // For other classes in our library
@@ -28,16 +28,16 @@ public class spawn extends JavaPlugin{
         if (!(spawn.plugin == null)) getLogger().info("spawn is running with "+spawn.plugin.getName());
         this.saveDefaultConfig();
         delay = this.getConfig().getBoolean("delayed-respawn");
-        delaytime = this.getConfig().getInt("respawn-delay");
+        delaytime = this.getConfig().getLong("respawn-delay");
         if (delay) {
-            d = new delay();
+            d = new delay(this);
             getCommand("delay").setExecutor(d);
             getServer().getPluginManager().registerEvents(d, this);
         }
         team = this.getConfig().getBoolean("team-respawn");
         if (team) {
-            t = new teamspawn();
-            getCommand("kit").setExecutor(t);
+            t = new teamspawn(this);
+            getCommand("teamspawn").setExecutor(t);
             getServer().getPluginManager().registerEvents(t, this);
         } 
     }
