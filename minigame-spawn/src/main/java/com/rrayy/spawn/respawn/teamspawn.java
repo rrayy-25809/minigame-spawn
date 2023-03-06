@@ -35,6 +35,7 @@ public class teamspawn implements Listener, CommandExecutor {
         try{
             l = new Location(p.getWorld(), Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
         } catch (NumberFormatException ex) {
+            ex.printStackTrace();
             l = p.getLocation();
         }
         teamspwanloc.put(t, l);
@@ -45,14 +46,12 @@ public class teamspawn implements Listener, CommandExecutor {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e){
         //if (e.getEntity().getKiller() instanceof Player)
+        if (e.getEntity() == null) return;
         Player pl = e.getEntity();
         if (team.getteam(main, pl) == null) return;
         Team t = team.getteam(main, pl);
-        if (t.getName() != null && teamspwanloc.containsKey(t)) {
-            spawLocation = teamspwanloc.get(t);
-        } else spawLocation = pl.getBedSpawnLocation();
-        pl.setBedSpawnLocation(spawLocation);
+        if (t.getName() != null && teamspwanloc.containsKey(t)) spawLocation = teamspwanloc.get(t);
+        else spawLocation = pl.getBedSpawnLocation();
+        pl.setBedSpawnLocation(spawLocation, true);
     }
-
-
 }

@@ -1,3 +1,4 @@
 team-respawn: true
 delayed-respawn: true
 respawn-delay: 10 #second
+basic-team: true

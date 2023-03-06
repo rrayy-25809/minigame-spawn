@@ -17,12 +17,13 @@ import com.rrayy.spawn.spawn;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class delay implements CommandExecutor, Listener {
     private JavaPlugin main;
     private Long dt = spawn.delaytime;
     private Long loopint = (long) 0;
-    private Map<String, Long> deathtime = new HashMap<String, Long>();
+    private Map<UUID, Long> deathtime = new HashMap<UUID, Long>();
 
     public delay(JavaPlugin plugin) {
         main = plugin;
@@ -31,11 +32,13 @@ public class delay implements CommandExecutor, Listener {
             @Override
             public void run() {
                 for (Player p1 : main.getServer().getOnlinePlayers()) {
-                    if (deathtime.containsKey(p1.getUniqueId().toString())){
-                        if (loopint == deathtime.remove(p1.getUniqueId().toString()) + dt) {
+                    if (deathtime.containsKey(p1.getUniqueId())){
+                        for(World w : main.getServer().getWorlds()) p1.teleport(new Location(w, 0, 100, 0));
+                        if (loopint == deathtime.get(p1.getUniqueId()) + dt) {
                             p1.setGameMode(GameMode.SURVIVAL);
                             p1.resetTitle();
                             p1.teleport(p1.getBedLocation());
+                            deathtime.remove(p1.getUniqueId());
                         }
                     }
                 }
@@ -60,8 +63,7 @@ public class delay implements CommandExecutor, Listener {
     public void onPlayerDeath(PlayerDeathEvent e){
         Player pl = e.getEntity();
         pl.setGameMode(GameMode.SPECTATOR);
-        deathtime.put(pl.getUniqueId().toString(), loopint);
-        for(World w : main.getServer().getWorlds()) pl.teleport(new Location(w, 0, 100, 0));
-        pl.sendTitle("죽었습니다!", dt + "초 후에 부활합니다", 0, 100, 0);
+        deathtime.put(pl.getUniqueId(), loopint);
+        pl.sendTitle("죽었습니다!", dt + "초 후에 부활합니다", 0, 1000000000, 0);
     }
 }
