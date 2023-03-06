@@ -15,9 +15,10 @@ config.yml
 team-respawn: true
 delayed-respawn: true
 respawn-delay: 10 #second
+basic-team: true
 ```
 
-## how to use it as library
+\\<!--## how to use it as library
 
 해당 플러그인은 라이브러리로 불러와서 기능을 추가하고 응용하는 것이 가능합니다.
 
@@ -36,4 +37,4 @@ print("meven")
 
 ### get plugin
 
-### example code()
+### example code()--!>
