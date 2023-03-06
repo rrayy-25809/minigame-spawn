@@ -11,7 +11,7 @@ This plugin can use the team spawn and delayed spawn functions that are used in 
 this plugin can turn on and turn off functions as edit config.yml file
 
 config.yml
-```
+```yml
 team-respawn: true
 delayed-respawn: true
 respawn-delay: 10 #second
@@ -26,7 +26,7 @@ This plugin can add functions
 
 ### add library
 gradle
-```
+```groovy
 repositories {
   maven { url 'https://jitpack.io' }
 }
