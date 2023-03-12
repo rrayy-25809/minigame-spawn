@@ -92,7 +92,11 @@ java
 ```java
 @Override
 public void onEnable() {
-    spawn.setPlugin(this);
+    PluginManager pluginManager = getServer().getPluginManager();
+    Plugin spawnPlugin = pluginManager.getPlugin("minigames-spawn");
+    if (spawnPlugin != null) {
+        spawn.setPlugin(this);
+    }
 }
 ```
 
