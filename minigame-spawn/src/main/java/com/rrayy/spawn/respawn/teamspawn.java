@@ -18,9 +18,10 @@ import com.rrayy.spawn.util.team;
 
 public class teamspawn implements Listener, CommandExecutor {
     private static JavaPlugin main = null;
-    private Map<Team, Location> teamspwanloc = new HashMap<Team, Location>();
-    private Location spawLocation;
+    private Map<Team, Location> teamspwanloc = new HashMap<Team, Location>();// 각 팀의 스폰 위치를 저장하는 Map
+    private Location spawLocation;// 새로운 스폰 위치를 저장할 변수
 
+    // 생성자
     public teamspawn(JavaPlugin spawn){
         main = spawn;
     }
@@ -28,9 +29,10 @@ public class teamspawn implements Listener, CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (main == null) return false;
-        Player p = (Player) sender;
+        Player p = (Player) sender;// 명령어를 실행한 플레이어
         if (team.getteam(main, p) == null) return false;
         Team t = team.getteam(main, p);
+        // 명령어로 입력한 좌표값을 이용하여 새로운 스폰 위치 생성
         Location l;
         try{
             l = new Location(p.getWorld(), Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
@@ -38,20 +40,23 @@ public class teamspawn implements Listener, CommandExecutor {
             ex.printStackTrace();
             l = p.getLocation();
         }
+        // 해당 팀의 스폰 위치를 갱신
         teamspwanloc.put(t, l);
-        p.sendMessage("팀의 스폰 위치가"+l.toString()+"로 설정 되었습니다");
+        p.sendMessage("팀의 스폰 위치가 " + l.toString() + "로 설정 되었습니다");
         return false;
     }
     
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e){
-        //if (e.getEntity().getKiller() instanceof Player)
+        // 죽은 플레이어가 속한 팀
         if (e.getEntity() == null) return;
         Player pl = e.getEntity();
         if (team.getteam(main, pl) == null) return;
         Team t = team.getteam(main, pl);
+        // 해당 팀의 스폰 위치가 설정되어 있으면 스폰 위치를 해당 위치로 설정
         if (t.getName() != null && teamspwanloc.containsKey(t)) spawLocation = teamspwanloc.get(t);
         else spawLocation = pl.getBedSpawnLocation();
+        // 플레이어의 스폰 위치를 변경
         pl.setBedSpawnLocation(spawLocation, true);
     }
 }
