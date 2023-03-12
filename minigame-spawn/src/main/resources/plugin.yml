@@ -9,4 +9,4 @@ commands:
     usage: /delay + (딜레이 시간/초)
   teamspawn:
     description: 기본 지급 아이템을 얻습니다
-    usage: /kit
+    usage: /teamspawn +(리스폰 위치)
