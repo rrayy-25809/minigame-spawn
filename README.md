@@ -69,7 +69,7 @@ dependencies {
 }
 ```
 
-meven
+maven
 ```xml
 <repositories>
     <repository>
