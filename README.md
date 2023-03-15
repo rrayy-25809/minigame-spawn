@@ -54,7 +54,7 @@ repositories {
 }
     
 dependencies {
-  implementation 'com.github.rrayy-25809:minigame-spawn:0.1-SNAPSHOT'
+  implementation 'com.github.rrayy-25809:minigame-spawn:master-SNAPSHOT'
 }
 ```
 
@@ -65,7 +65,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.rrayy-25809:minigame-spawn:0.1-SNAPSHOT")
+    implementation("com.github.rrayy-25809:minigame-spawn:master-SNAPSHOT")
 }
 ```
 
@@ -81,7 +81,7 @@ maven
     <dependency>
       <groupId>com.github.rrayy-25809</groupId>
       <artifactId>minigame-spawn</artifactId>
-      <version>0.1-SNAPSHOT</version>
+      <version>master-SNAPSHOT</version>
     </dependency>
   </dependencies>
 ```
@@ -92,22 +92,26 @@ java
 ```java
 @Override
 public void onEnable() {
-    PluginManager pluginManager = getServer().getPluginManager();
-    Plugin spawnPlugin = pluginManager.getPlugin("minigames-spawn");
-    if (spawnPlugin != null) {
-        spawn.setPlugin(this);
-    }
+  PluginManager pluginManager = getServer().getPluginManager();
+  Plugin spawnPlugin = pluginManager.getPlugin("minigame-spawn");
+  if (spawnPlugin != null) {
+    spawn.setPlugin(this);
+  }
 }
 ```
 
 kotlin
 ```kotlin
 override fun onEnable() {
-    spawn.plugin = this
+  val pluginManager = server.pluginManager
+  val spawnPlugin = pluginManager.getPlugin("minigame-spawn")
+  if (spawnPlugin != null) {
+    spawn.setPlugin(this)
+  }
 }
 ```
 
-<!--### example code()
+<!--### example code
 ``java
 
 ```-->
