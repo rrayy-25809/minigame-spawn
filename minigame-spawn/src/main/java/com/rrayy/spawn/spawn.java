@@ -31,10 +31,10 @@ public class spawn extends JavaPlugin{
         delaysp = this.getConfig().getBoolean("delayed-respawn");
         delaytime = this.getConfig().getLong("respawn-delay");
         if (this.getConfig().getBoolean("basic-team")){
-            team.red(plugin, null);
-            team.blue(plugin, null);
-            team.green(plugin, null);
-            team.yellow(plugin, null);
+            team.red(this, null);
+            team.blue(this, null);
+            team.green(this, null);
+            team.yellow(this, null);
         }
         if (delaysp) {
             d = new delay(this);

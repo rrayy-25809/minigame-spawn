@@ -35,7 +35,7 @@ public class teamspawn implements Listener, CommandExecutor {
         // 명령어로 입력한 좌표값을 이용하여 새로운 스폰 위치 생성
         Location l;
         try{
-            l = new Location(p.getWorld(), Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+            l = new Location(p.getWorld(), Long.parseLong(args[0]), Long.parseLong(args[1]), Long.parseLong(args[2]));
         } catch (NumberFormatException ex) {
             ex.printStackTrace();
             l = p.getLocation();
