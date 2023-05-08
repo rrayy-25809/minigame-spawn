@@ -19,27 +19,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class delay implements CommandExecutor, Listener {
+public class Delay implements CommandExecutor, Listener {
     private JavaPlugin main;
-    private Long dt = spawn.delaytime;
-    private Long loopint = (long) 0;
+    private long dt = spawn.delaytime;
+    private long loopint = 0L;
     private Map<UUID, Long> deathtime = new HashMap<>();
 
-    public delay(JavaPlugin plugin) {
+    public Delay(JavaPlugin plugin) {
         main = plugin;
         for (World w : main.getServer().getWorlds()) w.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
         main.getServer().getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
             @Override
             public void run() {
-                for (Player p1 : main.getServer().getOnlinePlayers()) {
-                    if (deathtime.containsKey(p1.getUniqueId())) {
-                        for (World w : main.getServer().getWorlds()) p1.teleport(new Location(w, 0, 100, 0));
-                        if (loopint.equals(deathtime.get(p1.getUniqueId()) + dt)) { // 값의 비교에는 equals 메소드를 사용
-                            p1.setGameMode(GameMode.SURVIVAL);
-                            p1.resetTitle();
-                            if (p1.getBedSpawnLocation() != null) p1.teleport(p1.getBedSpawnLocation());// 플레이어의 침대 위치가 있는 경우에만 이동하도록 변경
-                            else p1.teleport(p1.getWorld().getSpawnLocation()); // 침대 위치가 없는 경우 월드의 스폰 지점으로 이동하도록 변경
-                            deathtime.remove(p1.getUniqueId());
+                for (Player player : main.getServer().getOnlinePlayers()) {
+                    UUID playerId = player.getUniqueId();
+                    if (deathtime.containsKey(playerId)) {
+                        Location respawnLocation = new Location(player.getWorld(), 0, 100, 0);
+                        if (loopint == deathtime.get(playerId) + dt) {
+                            player.setGameMode(GameMode.SURVIVAL);
+                            player.resetTitle();
+                            Location bedLocation = player.getBedSpawnLocation();
+                            if (bedLocation != null) respawnLocation = bedLocation;
+                            player.teleport(respawnLocation);
+                            deathtime.remove(playerId);
                         }
                     }
                 }
@@ -50,20 +52,21 @@ public class delay implements CommandExecutor, Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (main == null || args.length == 0) return false;
+        if (args.length == 0) return false;
         try {
-            dt = Long.parseLong(args[0]); // Integer.parseInt 대신 Long.parseLong을 사용하여 오버플로우 방지
+            dt = Long.parseLong(args[0]);
             return true;
         } catch (NumberFormatException ex) {
             main.getLogger().warning(ex.toString());
         }
         return false;
     }
-
-    @EventHandler//if (e.getEntity().getKiller() instanceof Player)
+//if (e.getEntity().getKiller() instanceof Player)
+    @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e){
         Player pl = e.getEntity();
         pl.setGameMode(GameMode.SPECTATOR);
+        pl.teleport(new Location(pl.getWorld(), 0, 100, 0));
         deathtime.put(pl.getUniqueId(), loopint);
         pl.sendTitle("죽었습니다!", dt + "초 후에 부활합니다", 0, 1000000000, 0);
     }

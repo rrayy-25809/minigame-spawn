@@ -54,6 +54,33 @@ public class team {
         return t;
     }
 
+    public static Team purple(JavaPlugin spawn, Player player){
+        if (spawn == null) return null;
+        sb = spawn.getServer().getScoreboardManager().getMainScoreboard();
+        Team t = sb.registerNewTeam("purple");
+        t.setColor(ChatColor.DARK_PURPLE);
+        if (!(player == null)) jointeam(player, t);
+        return t;
+    }
+    
+    public static Team aqua(JavaPlugin spawn, Player player){
+        if (spawn == null) return null;
+        sb = spawn.getServer().getScoreboardManager().getMainScoreboard();
+        Team t = sb.registerNewTeam("aqua");
+        t.setColor(ChatColor.AQUA);
+        if (!(player == null)) jointeam(player, t);
+        return t;
+    }
+    
+    public static Team pink(JavaPlugin spawn, Player player){
+        if (spawn == null) return null;
+        sb = spawn.getServer().getScoreboardManager().getMainScoreboard();
+        Team t = sb.registerNewTeam("pink");
+        t.setColor(ChatColor.LIGHT_PURPLE);
+        if (!(player == null)) jointeam(player, t);
+        return t;
+    }
+    
     public static void jointeam(Player player, Team team){
         if (player == null) return;
         if (team == null) return;

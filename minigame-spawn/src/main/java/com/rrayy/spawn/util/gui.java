@@ -13,16 +13,27 @@ public class gui {
         inv = plugin.getServer().createInventory(null, rows*9, title);
     }
 
+    public gui(Inventory inventory){
+        inv = inventory;
+    }
+
     public void showto(Player player){
         player.openInventory(inv);
     }
 
     public void setitem(int column, int row, ItemStack item){
-        inv.setItem(row*column - 1, item);
+        inv.setItem((row-1)*9 + column - 1, item);
     }
 
     public boolean isclicked(InventoryClickEvent event){
-        if (event.getClickedInventory()==inv) return true;
-        else return false;
+        return event.getClickedInventory() == inv;
+    }
+
+    public ItemStack getitem(int column, int row){
+        return inv.getItem((row-1)*9 + column - 1);
+    }
+
+    public Inventory getinventory(){
+        return inv;
     }
 }

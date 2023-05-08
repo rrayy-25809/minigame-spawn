@@ -2,12 +2,12 @@ package com.rrayy.spawn;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.rrayy.spawn.respawn.delay;
+import com.rrayy.spawn.respawn.Delay;
 import com.rrayy.spawn.respawn.teamspawn;
 import com.rrayy.spawn.util.team;
 
 public class spawn extends JavaPlugin{
-    public delay d;
+    public Delay d;
     public teamspawn t;
     private static JavaPlugin plugin = null;
     public boolean delaysp;
@@ -37,7 +37,7 @@ public class spawn extends JavaPlugin{
             team.yellow(this, null);
         }
         if (delaysp) {
-            d = new delay(this);
+            d = new Delay(this);
             getCommand("delay").setExecutor(d);
             getServer().getPluginManager().registerEvents(d, this);
         }
